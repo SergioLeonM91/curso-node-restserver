@@ -60,7 +60,7 @@ const userDelete = async(req, res) => {
     // const user = await User.findByIdAndDelete(id);
 
     // Delete with flag
-    const user = await User.findByIdAndUpdate( id, {status: false} )
+    const user = await User.findByIdAndUpdate( id, {status: false} );
 
     res.json(user);
 }
