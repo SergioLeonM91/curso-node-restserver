@@ -4,10 +4,10 @@ const { check } = require('express-validator');
 const { 
     validateFields, 
     validateJWT, 
-    hasRole,
-    isAdminRole } = require('../middlewares');
+    hasRole
+} = require('../middlewares');
 
-const { isValidRole, emailExists, existUserByID, validatePaginationParams } = require('../helpers/dbValidators');
+const { isValidRole, emailExists, existUserByID, validatePaginationParams } = require('../helpers');
 
 const { 
     usersGet,
@@ -15,7 +15,7 @@ const {
     userPost,
     userDelete,
     userPatch 
-} = require('../controllers/user,js');
+} = require('../controllers');
 
 const router = Router();
 

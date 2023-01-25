@@ -1,5 +1,5 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const { Category, Product, Role, User } = require('../models');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const isValidRole = async(role = '') => {
     const roleExists = await Role.findOne({ role });
@@ -31,9 +31,39 @@ const validatePaginationParams = async(value) => {
     }
 }
 
+const categoryExists = async(id) => {
+    const categoryExists = await Category.findById(id);
+
+    if( !categoryExists ) {
+        throw new Error(`The category with id ${id} doesn't exists in the DB`);
+    }
+}
+
+const productExists = async(id) => {
+    const productExists = await Product.findById(id);
+
+    if( !productExists ) {
+        throw new Error(`The product with id ${id} doesn't exists in the DB`);
+    }
+}
+
+function isValidObjectId(id){
+    
+    if(ObjectId.isValid(id)){
+        if((String)(new ObjectId(id)) === id)
+            return true;
+        return false;
+    }
+
+    return false;
+}
+
 module.exports = {
     isValidRole,
     emailExists,
     existUserByID,
-    validatePaginationParams
+    validatePaginationParams,
+    categoryExists,
+    productExists,
+    isValidObjectId
 }
