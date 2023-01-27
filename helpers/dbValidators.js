@@ -21,7 +21,7 @@ const existUserByID = async(id) => {
     const userExists = await User.findById(id);
 
     if( !userExists ) {
-        throw new Error(`The id ${id} doesn't exists in the DB`);
+        throw new Error(`The user with id ${id} doesn't exists in the DB`);
     }
 }
 
@@ -58,6 +58,38 @@ function isValidObjectId(id){
     return false;
 }
 
+const getModel = (collection, id) => {
+
+    return new Promise( async(resolve, reject) => {
+
+        switch (collection) {
+            case 'users':
+                model = await User.findById(id);
+
+                if(!model) {
+                    reject(`Doesn't exist a user with id: ${id}`);
+                }
+                break;
+
+            case 'products':
+                model = await Product.findById(id);
+
+                if(!model) {
+                    reject(`Doesn't exist a product with id: ${id}`);
+                }
+                break;
+        
+            default:
+                reject('That collection validation is not implemented');
+                break;
+        }
+
+        resolve(model);
+
+    });
+
+}
+
 module.exports = {
     isValidRole,
     emailExists,
@@ -65,5 +97,6 @@ module.exports = {
     validatePaginationParams,
     categoryExists,
     productExists,
-    isValidObjectId
+    isValidObjectId,
+    getModel
 }
